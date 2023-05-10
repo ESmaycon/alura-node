@@ -13,12 +13,13 @@ class livroController {
 
   static cadastrarLivros = async (req, res) => {
     try {
-      let livro = await new livros(req.body);
-      res.status(200).send(livro.toJSON);
+      const livro = new livros(req.body);
+
+      const newCadastro = await livros.create(livro);
+
+      return res.status(201).json(newCadastro);
     } catch (err) {
-      res
-        .status(500)
-        .send({ message: `${err.message} - falha ao cadastrar livro` });
+      res.status(500).send({ message: `${err.message} - falha ao cadastrar` });
     }
   };
 }
